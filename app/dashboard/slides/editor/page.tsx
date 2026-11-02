@@ -1,0 +1,1 @@
+import SlideEditor from '@/components/slide-editor';export default async function EditorPage({searchParams}:{searchParams:Promise<{topic?:string;id?:string}>}){const p=await searchParams;return <SlideEditor topic={p.topic||'Novo conteúdo de Português'} materialId={p.id||''}/>}

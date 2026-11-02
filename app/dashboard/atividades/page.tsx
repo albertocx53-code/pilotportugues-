@@ -1,0 +1,1 @@
+import MaterialStudio from '@/components/material-studio';export default function Page(){return <MaterialStudio kind='atividade'/>}

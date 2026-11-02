@@ -1,0 +1,1 @@
+'use client';import {useRouter} from 'next/navigation';import {supabaseBrowser} from '@/lib/supabase/browser';export default function SignOut(){const router=useRouter();return <button className="text-sm text-slate-500 hover:text-red-600" onClick={async()=>{await supabaseBrowser().auth.signOut();router.replace('/login');router.refresh()}}>Sair da conta</button>}
