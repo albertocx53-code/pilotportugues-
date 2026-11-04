@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Epilogue:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import 'tailwindcss';
+
+/* Tema por classe (.dark), controlado pela preferência salva no perfil. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  PortuguêsPilot — paleta tirada do material real de quem ensina Português:
+  tinta azul de caneta, vermelho de correção, papel frio (não creme).
+  O vermelho só aparece quando algo pede atenção de verdade.
+*/
+@theme {
+  --color-tinta: #141b34;
+  --color-tinta-2: #26304f;
+  --color-grafite: #5b6684;
+  --color-grafite-2: #8b93ab;
+
+  --color-papel: #ffffff;
+  --color-papel-2: #f4f6fb;
+  --color-papel-3: #e8ecf6;
+  --color-linha: #dfe4f0;
+
+  --color-pena: #2e4bc6;
+  --color-pena-forte: #1b2e86;
+  --color-pena-clara: #eaeeff;
+
+  --color-correcao: #c8372d;
+  --color-correcao-clara: #fdecea;
+  --color-giz: #0e9e6e;
+  --color-giz-clara: #e7f7f1;
+  --color-marca-texto: #ffe08a;
+
+  --font-display: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Epilogue', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius-folha: 14px;
+}
+
+.dark {
+  --color-tinta: #eef1f9;
+  --color-tinta-2: #c7cde0;
+  --color-grafite: #9aa3bd;
+  --color-grafite-2: #6f7899;
+
+  --color-papel: #121829;
+  --color-papel-2: #0c1120;
+  --color-papel-3: #1c2439;
+  --color-linha: #263053;
+
+  --color-pena: #8097fa;
+  --color-pena-forte: #a8b7ff;
+  --color-pena-clara: #1b2445;
+
+  --color-correcao: #ff8275;
+  --color-correcao-clara: #3a1d1c;
+  --color-giz: #35c795;
+  --color-giz-clara: #10322a;
+}
+
+/*
+  Cor padrão das bordas.
+
+  Precisa estar em @layer base: no Tailwind v4 as utilidades vivem numa camada
+  de cascata, e qualquer regra fora de camada vence todas elas, por mais
+  específica que sejam. Sem o @layer, este seletor sobrescreveria
+  border-transparent, border-pena, border-correcao e todas as outras.
+*/
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-linha);
+  }
+}
+
+html {
+  color-scheme: light;
+}
+.dark html,
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-papel-2);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-synthesis-weight: none;
+}
+
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+/* Foco sempre visível — professores navegam muito por teclado em laboratório. */
+:focus-visible {
+  outline: 2px solid var(--color-pena);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-marca-texto);
+  color: #141b34;
+}
+
+/* ---------- Componentes base ---------- */
+
+.folha {
+  background: var(--color-papel);
+  border: 1px solid var(--color-linha);
+  border-radius: var(--radius-folha);
+}
+
+.campo {
+  width: 100%;
+  background: var(--color-papel);
+  border: 1px solid var(--color-linha);
+  border-radius: 10px;
+  padding: 11px 13px;
+  color: var(--color-tinta);
+  font: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.campo::placeholder {
+  color: var(--color-grafite-2);
+}
+.campo:focus {
+  outline: none;
+  border-color: var(--color-pena);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-pena) 18%, transparent);
+}
+.campo:disabled {
+  opacity: 0.6;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-pena);
+  color: #fff;
+  font-weight: 600;
+  padding: 11px 18px;
+  border-radius: 10px;
+  transition: background 0.15s, transform 0.08s;
+  cursor: pointer;
+}
+.botao:hover:not(:disabled) {
+  background: var(--color-pena-forte);
+}
+.dark .botao {
+  color: #0c1120;
+}
+.botao:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.botao:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.botao-vazio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-papel);
+  color: var(--color-tinta);
+  border: 1px solid var(--color-linha);
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  transition: background 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+.botao-vazio:hover:not(:disabled) {
+  background: var(--color-papel-2);
+  border-color: var(--color-grafite-2);
+}
+.botao-vazio:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.botao-texto {
+  color: var(--color-pena);
+  font-weight: 600;
+  cursor: pointer;
+}
+.botao-texto:hover {
+  text-decoration: underline;
+}
+
+/* Marcador de margem: a barra que indica o item ativo, como anotação em caderno. */
+.margem-ativa {
+  position: relative;
+}
+.margem-ativa::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--color-pena);
+}
+
+/* ---------- Movimento ---------- */
+/* Só no carregamento da home e em mudanças de estado. */
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.surgir {
+  animation: surgir 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sublinhar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes marcar {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes entrar-aviso {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.entrar-aviso {
+  animation: entrar-aviso 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pulsar-linha {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.girando {
+  animation: girar 0.7s linear infinite;
+}
+
+/* Esqueleto de carregamento */
+.esqueleto {
+  background: linear-gradient(
+    90deg,
+    var(--color-papel-3) 25%,
+    var(--color-papel-2) 50%,
+    var(--color-papel-3) 75%
+  );
+  background-size: 200% 100%;
+  animation: esqueleto 1.3s ease-in-out infinite;
+  border-radius: 8px;
+}
+@keyframes esqueleto {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Barra de rolagem discreta */
+.rolagem-fina::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.rolagem-fina::-webkit-scrollbar-thumb {
+  background: var(--color-papel-3);
+  border-radius: 8px;
+}
+.rolagem-fina::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- Impressão ---------- */
+/*
+  O professor imprime a atividade para a turma, então a folha impressa importa
+  tanto quanto a tela. Duas armadilhas tratadas aqui:
+
+  1. O painel é um grid de duas colunas (menu + conteúdo). Esconder o menu com
+     display:none não devolve a largura: o conteúdo cairia na coluna estreita
+     de 17rem. Por isso o grid vira bloco na impressão.
+  2. Os campos editáveis são textarea com altura calculada na largura da tela.
+     Ao estreitar para o papel, o texto seria cortado. Na impressão trocamos
+     cada textarea por um parágrafo com o mesmo conteúdo (.somente-impressao).
+*/
+
+.somente-impressao {
+  display: none;
+}
+
+@media print {
+  .nao-imprimir {
+    display: none !important;
+  }
+
+  .area-do-painel {
+    display: block !important;
+  }
+
+  .area-do-painel main {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .somente-impressao {
+    display: block;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .folha {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+}

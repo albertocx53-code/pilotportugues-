@@ -1,0 +1,222 @@
+/*
+  Palco do slide em 16:9.
+
+  Todas as medidas usam `cqw` (1% da largura do contêiner), então o mesmo
+  componente serve para a prévia pequena, para a apresentação em tela cheia e
+  para o palco de 1280px usado na exportação — sem JavaScript de escala e sem
+  diferença entre o que se vê e o que sai no PDF.
+*/
+
+.slide-palco {
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.slide-canvas {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4.6cqw 5.2cqw;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  font-size: 2.1cqw;
+}
+
+/* ---------- Temas ---------- */
+
+.slide-editorial {
+  background: #fdfcf9;
+  color: #171a24;
+  font-family: var(--font-display);
+}
+.slide-editorial .slide-titulo {
+  font-family: var(--font-display);
+}
+
+.slide-moderno {
+  background: #ffffff;
+  color: #141b34;
+  font-family: var(--font-sans);
+}
+.slide-moderno .slide-titulo {
+  font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+}
+
+.slide-quadro {
+  background: #16211c;
+  color: #eef3ec;
+  font-family: var(--font-display);
+}
+.slide-quadro .slide-rodape,
+.slide-quadro .slide-topo {
+  color: #9fb3a6;
+}
+
+/* ---------- Topo ---------- */
+
+.slide-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2cqw;
+  font-family: var(--font-sans);
+  font-size: 1.32cqw;
+  font-weight: 600;
+  color: #6b7389;
+  padding-bottom: 1.5cqw;
+  border-bottom: 0.14cqw solid currentColor;
+  flex-shrink: 0;
+}
+.slide-topo > span:last-child {
+  font-weight: 400;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 55%;
+}
+
+/* ---------- Corpo ---------- */
+
+.slide-corpo {
+  flex: 1;
+  display: grid;
+  gap: 3.4cqw;
+  align-items: center;
+  min-height: 0;
+  padding: 3cqw 0;
+}
+
+.slide-corpo.layout-split {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+.slide-corpo.layout-minimal,
+.slide-corpo.layout-hero {
+  grid-template-columns: 1fr;
+}
+
+.slide-texto {
+  min-width: 0;
+}
+
+.slide-numero {
+  font-family: var(--font-sans);
+  font-size: 1.3cqw;
+  font-weight: 700;
+  color: var(--slide-destaque);
+  margin-bottom: 1.1cqw;
+}
+
+.slide-titulo {
+  font-size: 4.5cqw;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+.layout-hero .slide-titulo {
+  font-size: 6.2cqw;
+}
+
+.slide-tracinho {
+  width: 7cqw;
+  height: 0.42cqw;
+  border-radius: 0.42cqw;
+  background: var(--slide-destaque);
+  margin: 2cqw 0;
+}
+
+.slide-paragrafo {
+  font-size: 2.3cqw;
+  line-height: 1.55;
+  white-space: pre-line;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+.layout-hero .slide-paragrafo {
+  font-size: 2.6cqw;
+  opacity: 0.82;
+}
+.layout-minimal .slide-paragrafo {
+  font-size: 2.7cqw;
+  line-height: 1.6;
+}
+
+/* ---------- Imagem ---------- */
+
+.slide-imagem {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqw;
+}
+.slide-imagem img {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 1.1cqw;
+  background: rgba(0, 0, 0, 0.04);
+}
+.slide-credito {
+  font-family: var(--font-sans);
+  font-size: 1.05cqw;
+  line-height: 1.3;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Sem imagem: um sinal gráfico discreto, não um bloco vazio */
+.slide-enfeite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4cqw;
+  height: 100%;
+  border-radius: 1.1cqw;
+  border: 0.14cqw solid currentColor;
+  opacity: 0.22;
+}
+.slide-enfeite-sinal {
+  font-family: var(--font-display);
+  font-size: 7cqw;
+  line-height: 1;
+  color: var(--slide-destaque);
+  opacity: 0.85;
+}
+.slide-enfeite span {
+  font-family: var(--font-sans);
+  font-size: 1.2cqw;
+  text-align: center;
+  padding: 0 1.5cqw;
+}
+
+/* ---------- Rodapé ---------- */
+
+.slide-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-sans);
+  font-size: 1.15cqw;
+  color: #8b93ab;
+  padding-top: 1.4cqw;
+  border-top: 0.14cqw solid currentColor;
+  flex-shrink: 0;
+}
+
+/* ---------- Apresentação em tela cheia ---------- */
+
+.slide-apresentando {
+  width: min(100vw, calc(100vh * 16 / 9));
+  max-width: 100vw;
+}
